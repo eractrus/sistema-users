@@ -6,6 +6,6 @@ import CreateUserCOntroller from '../Controller/user/createUserController';
 
 const router = Router();
 
-router.get('/', new CreateUserCOntroller().handle);
+router.post('/user', new CreateUserCOntroller().handle);
 
 export default router;

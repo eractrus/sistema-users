@@ -3,7 +3,22 @@ import CreateUserService from "../../Service/user/createUserService";
 
 export default class CreateUserCOntroller {
     async handle(req: Request, res: Response) {
-        const service = await new CreateUserService().executeService()
+
+        const { apelido, email, senha } = req.body
+
+        if (!apelido || !email || !senha) {
+
+            return res.status(500).json({
+                menasagem: 'Necessário que todos os dados sejam preenchidos'
+            })
+        }
+
+        const service = await new CreateUserService().executeService(
+            {
+                apelido, email, senha
+            }
+        )
+
         return res.send(service)
     }
 }
