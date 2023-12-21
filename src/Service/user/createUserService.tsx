@@ -5,6 +5,18 @@ import { PropsUser } from '../../types/user'
 export default class CreateUserService {
     async executeService({ apelido, email, senha }: PropsUser) {
 
+        const veryEmail = await prismaClient.user.findFirst({
+            where: {
+                email: email
+            }
+        })
+
+        if (veryEmail) {
+            return {
+                Mensagem: 'E-mail ja cadastrado'
+            }
+        }
+
         const senhaHash = await hash(senha, 8)
 
         const service = await prismaClient.user.create({
