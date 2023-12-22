@@ -9,3 +9,8 @@ export interface PropsValidation{
     email: string
     senha: string
 }
+
+export interface PropsAuthUser{
+    apelido: string
+    senha: string
+}
