@@ -6,6 +6,12 @@ export default class AuthUserController {
 
         const { apelido, senha } = req.body
 
+        if (!apelido || !senha) {
+            return res.status(400).json({
+                mensagem: 'Credenciais inválidas'
+            })
+        }
+
         const service = await new AuthUserService().executeService(
             { apelido, senha }
         )
