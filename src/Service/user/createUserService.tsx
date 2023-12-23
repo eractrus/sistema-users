@@ -16,7 +16,7 @@ export default class CreateUserService {
                 Mensagem: 'E-mail ja cadastrado'
             }
         }
-
+//#TODO: Criptografando senha do usuário antes de registrar no banco de dados
         const senhaHash = await hash(senha, 8)
 
         const service = await prismaClient.user.create({

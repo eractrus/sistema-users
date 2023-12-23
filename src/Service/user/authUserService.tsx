@@ -22,6 +22,7 @@ export default class AuthUserService {
             throw new Error('Apelido ou Senha incorretos')
         }
 
+       //#TODO: Gerando um token para autenticação de usuário
         const token = sign(
             {
                 apelido: veryApelido.apelido,
