@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import CreateUserService from "../../Service/user/createUserService";
+import { JsonObject } from "@prisma/client/runtime/library";
 
 export default class CreateUserCOntroller {
     async handle(req: Request, res: Response) {
