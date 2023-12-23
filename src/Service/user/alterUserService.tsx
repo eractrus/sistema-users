@@ -13,9 +13,7 @@ export default class AlterUserService {
             });
 
             if (!existingUser) {
-                return {
-                    mensagem: 'Usuário não encontrado'
-                };
+              throw new Error('Usuário não encontrado')
             }
 
             const hashedPassword = await hash(senha, 10);
