@@ -1,6 +1,7 @@
 import prismaClient from "../../Prisma";
 import { PropsAuthUser } from "../../types/user";
 import { compare } from "bcryptjs";
+import { sign } from "jsonwebtoken";
 
 export default class AuthUserService {
     async executeService({ apelido, senha }: PropsAuthUser) {
@@ -8,33 +9,38 @@ export default class AuthUserService {
         const veryApelido = await prismaClient.user.findFirst({
             where: {
                 apelido: apelido
-            },
-            select: {
-                senha: true
             }
         })
 
         if (!veryApelido) {
-            return { Mensagem: 'Credenciais incorretas' }
+            throw new Error('Apelido ou Senha incorretos')
         }
 
         const verySenha = await compare(senha, veryApelido.senha)
 
         if (!verySenha) {
-            return { Mensagem: 'Credenciais incorretas' }
+            throw new Error('Apelido ou Senha incorretos')
         }
 
-        const result = await prismaClient.user.findFirst({
-            where: {
-                apelido: apelido
+        const token = sign(
+            {
+                apelido: veryApelido.apelido,
+                email: veryApelido.email
             },
-            select: {
-                apelido: true,
-                email: true,
-                id: true,
+            process.env.KEY_SECRET,
+            {
+                subject: veryApelido.id,
+                expiresIn: "30d"
             }
-        })
+        )
 
-        return { result }
+        return {
+            user: {
+                apelido: veryApelido.apelido,
+                email: veryApelido.email,
+                id: veryApelido.id
+            },
+            token
+        }
     }
 }
