@@ -9,3 +9,4 @@ server.use(express.json());
 server.use(router); // Use o roteador aqui
 
 server.listen(PORT, () => console.log(`Servidor ativo na porta ${PORT}`));
+

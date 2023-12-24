@@ -1,3 +1,0 @@
-const db = []
-
-export {db}
