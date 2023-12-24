@@ -12,11 +12,10 @@ export default class CreateUserService {
         })
 
         if (veryEmail) {
-            return {
-                Mensagem: 'E-mail ja cadastrado'
-            }
+            throw new Error('E-mail ja cadastrado')
         }
-//#TODO: Criptografando senha do usuário antes de registrar no banco de dados
+
+        //#TODO: Criptografando senha do usuário antes de registrar no banco de dados
         const senhaHash = await hash(senha, 8)
 
         const service = await prismaClient.user.create({
@@ -24,6 +23,7 @@ export default class CreateUserService {
                 apelido: apelido, email: email, senha: senhaHash
             },
             select: {
+                id: true,
                 apelido: true,
                 email: true,
             }
