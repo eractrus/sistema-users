@@ -13,13 +13,14 @@ export default class AuthUserService {
         })
 
         if (!veryApelido) {
-            throw new Error('Apelido ou Senha incorretos')
+            throw new Error('Apelido incorreto')
         }
 
         const verySenha = await compare(senha, veryApelido.senha)
 
+
         if (!verySenha) {
-            throw new Error('Apelido ou Senha incorretos')
+            throw new Error('Senha incorreto')
         }
 
        //#TODO: Gerando um token para autenticação de usuário

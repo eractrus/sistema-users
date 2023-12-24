@@ -12,18 +12,8 @@ export default class AlterUserController {
             })
         }
 
-        try {
+        const service = await new AlterUserService().executeService({ email, senha })
 
-            const service = await new AlterUserService().executeService({ email, senha })
-
-            return res.send(service)
-
-        } catch (error) {
-            return res.status(500).json({
-                mensagem: 'Erro na utilização da API'
-            })
-        }
-
-
+        return res.send(service)
     }
 }
